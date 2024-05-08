@@ -25,9 +25,9 @@ class LevelSelectionScreen extends StatefulWidget {
 }
 
 class _LevelSelectionScreenState extends State<LevelSelectionScreen> {
-  final PagingController<int, JigsawInfo> _pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, JigsawInfo> _pagingController = PagingController(firstPageKey: 1);
 
+  @override
   initState() {
     super.initState();
     _pagingController.addPageRequestListener((pageKey) async {
@@ -39,8 +39,7 @@ class _LevelSelectionScreenState extends State<LevelSelectionScreen> {
   Future<void> _fetchPage(int pageId) async {
     try {
       final List<JigsawInfo> newLists = [];
-      DioClient.getInstance().get(Api.image,
-          params: {"page": pageId, "per_page": 15}).then((value) {
+      DioClient.getInstance().get(Api.image, params: {"page": pageId, "per_page": 15}).then((value) {
         value["photos"].forEach((ele) {
           newLists.add(JigsawInfo.fromJson(ele));
         });
@@ -78,10 +77,7 @@ class _LevelSelectionScreenState extends State<LevelSelectionScreen> {
         backgroundColor: palette.backgroundMain,
         title: Text(
           'Real Puzzle',
-          style: TextStyle(
-              fontFamily: 'Permanent Marker',
-              fontSize: 40.sp,
-              color: palette.textColor),
+          style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 40.sp, color: palette.textColor),
         ),
         actions: [
           IconButton(
@@ -93,7 +89,7 @@ class _LevelSelectionScreenState extends State<LevelSelectionScreen> {
       ),
       body: Center(
         child: Container(
-          width: 0.7.sw,
+          width: 0.99.sw,
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -274,19 +270,13 @@ class _LevelSelectionScreenState extends State<LevelSelectionScreen> {
         margin: EdgeInsets.only(left: 8.w, right: 8.w),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: _gridSizeValue == num
-              ? palette.tabSelectColor
-              : palette.tabUnSelectColor,
+          color: _gridSizeValue == num ? palette.tabSelectColor : palette.tabUnSelectColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Radio(value: num, groupValue: _gridSizeValue, onChanged: (value) {f(value);}),
-            Text("${num * num}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w200,
-                    fontSize: 36.sp,
-                    color: Colors.white)),
+            Text("${num * num}", style: TextStyle(fontWeight: FontWeight.w200, fontSize: 36.sp, color: Colors.white)),
             // return ListTile(
             //     title: Container(width:30.w,height:20.h,child: Text("${num * num}")),
             //     leading:

@@ -43,9 +43,7 @@ class MainMenuScreen extends StatelessWidget {
                     onTap: () {
                       launchUrlString('https://www.pexels.com');
                     },
-                    child: Text(
-                        'Photos provided by Pexels'
-                    ),
+                    child: Text('Photos provided by Pexels'),
                   ),
                 ),
                 Padding(
@@ -54,9 +52,7 @@ class MainMenuScreen extends StatelessWidget {
                     onTap: () {
                       launchUrlString('https://github.com/xfans/flutter_jigsaw_puzzle');
                     },
-                    child: Text(
-                        'https://github.com/xfans/flutter_jigsaw_puzzle'
-                    ),
+                    child: Text('https://github.com/xfans/flutter_jigsaw_puzzle'),
                   ),
                 )
               ],
@@ -85,7 +81,9 @@ class MainMenuScreen extends StatelessWidget {
                 valueListenable: settingsController.muted,
                 builder: (context, muted, child) {
                   return IconButton(
-                    onPressed: () => settingsController.toggleSoundsOn(),
+                    onPressed: () {
+                      settingsController.toggleMuted();
+                    },
                     icon: Icon(muted ? Icons.volume_off : Icons.volume_up),
                   );
                 },

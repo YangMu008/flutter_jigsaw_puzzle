@@ -51,8 +51,7 @@ class _LoadingSelectionScreenState extends State<LoadingSelectionScreen> {
               print("complete: 22");
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Future.delayed(Duration(milliseconds: 1500), () async {
-                  GoRouter.of(context)
-                      .go('/play/session/', extra: widget.level);
+                  GoRouter.of(context).go('/play/session/', extra: widget.level);
                 });
               });
             },

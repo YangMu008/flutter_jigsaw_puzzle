@@ -61,58 +61,48 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   static final _router = GoRouter(
     routes: [
-      GoRoute(
-          path: '/',
-          builder: (context, state) =>
-              const MainMenuScreen(key: Key('main menu')),
-          routes: [
-            GoRoute(
-                path: 'play',
-                pageBuilder: (context, state) => buildMyTransition<void>(
-                      child: const LevelSelectionScreen(
-                          key: Key('level selection')),
-                      color: context.watch<Palette>().backgroundMain,
+      GoRoute(path: '/', builder: (context, state) => const MainMenuScreen(key: Key('main menu')), routes: [
+        GoRoute(
+            path: 'play',
+            pageBuilder: (context, state) => buildMyTransition<void>(
+                  child: const LevelSelectionScreen(key: Key('level selection')),
+                  color: context.watch<Palette>().backgroundMain,
+                ),
+            routes: [
+              GoRoute(
+                path: 'loading',
+                pageBuilder: (context, state) {
+                  final jigsaw = state.extra! as JigsawInfo;
+                  return buildMyTransition<void>(
+                    child: LoadingSelectionScreen(
+                      key: const Key('loading session'),
+                      level: jigsaw,
                     ),
-                routes: [
-                  GoRoute(
-                    path: 'loading',
-                    pageBuilder: (context, state) {
-                      final jigsaw = state.extra! as JigsawInfo;
-                      return buildMyTransition<void>(
-                        child: LoadingSelectionScreen(
-                          key: const Key('loading session'),
-                          level: jigsaw,
-                        ),
-                        color: context.watch<Palette>().backgroundMain,
-                      );
-                    },
-                  ),
-                  GoRoute(
-                    path: 'session',
-                    pageBuilder: (context, state) {
-                      final jigsaw = state.extra! as JigsawInfo;
-                      return buildMyTransition<void>(
-                        child: PlaySessionScreen(
-                          jigsaw,
-                          key: const Key('play session'),
-                        ),
-                        color: context.watch<Palette>().backgroundMain,
-                      );
-                    },
-                  ),
-
-                ]),
-            GoRoute(
-                path: 'settings',
-                builder: (context, state) =>
-                    const SettingsScreen(key: Key('settings')),
-                routes: [
-                  GoRoute(
-                    path: 'about',
-                    builder: (context, state) => const AboutScreen(),
-                  )
-                ]),
-          ]),
+                    color: context.watch<Palette>().backgroundMain,
+                  );
+                },
+              ),
+              GoRoute(
+                path: 'session',
+                pageBuilder: (context, state) {
+                  final jigsaw = state.extra! as JigsawInfo;
+                  return buildMyTransition<void>(
+                    child: PlaySessionScreen(
+                      jigsaw,
+                      key: const Key('play session'),
+                    ),
+                    color: context.watch<Palette>().backgroundMain,
+                  );
+                },
+              ),
+            ]),
+        GoRoute(path: 'settings', builder: (context, state) => const SettingsScreen(key: Key('settings')), routes: [
+          GoRoute(
+            path: 'about',
+            builder: (context, state) => const AboutScreen(),
+          )
+        ]),
+      ]),
     ],
   );
 
@@ -133,15 +123,13 @@ class MyApp extends StatelessWidget {
         return AppLifecycleObserver(
           child: MultiProvider(
             providers: [
-
               Provider<SettingsController>(
                 lazy: false,
                 create: (context) => SettingsController(
                   persistence: settingsPersistence,
                 )..loadStateFromPersistence(),
               ),
-              ProxyProvider2<SettingsController,
-                  ValueNotifier<AppLifecycleState>, AudioController>(
+              ProxyProvider2<SettingsController, ValueNotifier<AppLifecycleState>, AudioController>(
                 // Ensures that the AudioController is created on startup,
                 // and not "only when it's needed", as is default behavior.
                 // This way, music starts immediately.

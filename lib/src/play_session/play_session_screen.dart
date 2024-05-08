@@ -57,10 +57,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
           backgroundColor: palette.backgroundMain,
           title: Text(
             'Real Puzzle',
-            style: TextStyle(
-                fontFamily: 'Permanent Marker',
-                fontSize: 40.sp,
-                color: palette.textColor),
+            style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 40.sp, color: palette.textColor),
           ),
           actions: [
             InkResponse(
@@ -109,12 +106,11 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                         color: palette.textColor,
                       ),
                     ),
-                    game: JigsawGame(
-                        widget.level, settingsController.soundsOn.value, () {
+                    game: JigsawGame(widget.level, settingsController.soundsOn.value, () {
                       playerWon();
                     }),
                     backgroundBuilder: (context) => Container(
-                      color: palette.backgroundMain,
+                      color: Colors.white,
                     ),
                   ),
                   // AnimatedHideWidget(
@@ -124,7 +120,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
               ),
             ),
             SizedBox(
-              height: 8.h,
+              height: 30.h,
             ),
             SizedBox(
               height: 8.h,
@@ -215,8 +211,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                   child: FutureBuilder<File>(
                       future: _getImage(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.data != null) {
+                        if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
                           return Image.file(snapshot.data!);
                         }
                         return Container();
@@ -224,10 +219,7 @@ class _PlaySessionScreenState extends State<PlaySessionScreen> {
                 ),
                 Text(
                   'Time: ${score.formattedTime}',
-                  style: TextStyle(
-                      fontFamily: 'Permanent Marker',
-                      fontSize: 40.sp,
-                      color: Palette().textColor),
+                  style: TextStyle(fontFamily: 'Permanent Marker', fontSize: 40.sp, color: Palette().textColor),
                 )
               ],
             ),
